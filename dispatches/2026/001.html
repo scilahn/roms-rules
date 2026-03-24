@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispatch 001 — Grand Nagus Field Bureau</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f0e8;
+    color: #1a1410;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .masthead {
+    background: #ede6d6;
+    border: 0.5px solid #e0d6c2;
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .mast-eyebrow { font-size: 11px; color: #a08c7a; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-family: monospace; }
+  .mast-title { font-size: 22px; font-weight: 500; font-style: italic; color: #1a1410; margin-bottom: 3px; }
+  .mast-sub { font-size: 13px; color: #6b5d50; font-style: italic; }
+
+  .card {
+    margin-bottom: 2.5rem;
+    border-top: 1.5px solid #1a1410;
+    padding-top: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  .card-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
+  .rule-num { font-family: monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+  .obs-badge {
+    font-family: monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; background: #e8f0e0; color: #3a5a1a; border-radius: 2px;
+  }
+  .rule-text {
+    font-size: 1.55rem; font-style: italic; font-weight: 500;
+    color: #1a1410; line-height: 1.25; margin-bottom: 1rem;
+  }
+  .field-divider { display: flex; align-items: center; gap: 10px; margin: 0 0 1rem; }
+  .field-divider::before, .field-divider::after { content:''; flex:1; border-top: 0.5px solid rgba(26,20,16,0.12); }
+  .field-divider span { font-family: monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+
+  .commentary {
+    font-size: 1.05rem; line-height: 1.8; color: #3d342a; font-style: italic;
+    border-left: 2px solid #b8860b; padding-left: 1rem; margin-bottom: 1rem;
+  }
+  .citation {
+    display: flex; flex-wrap: wrap; gap: 7px; align-items: baseline;
+    background: #ede6d6; border: 0.5px solid rgba(26,20,16,0.1);
+    border-radius: 2px; padding: 8px 12px;
+  }
+  .badge { font-family: monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500; padding: 2px 8px; border-radius: 2px; white-space: nowrap; }
+  .badge-src { background: #e2edf7; color: #1a4a7a; }
+  .badge-pub { background: #f3ede0; color: #6b4a10; border: 0.5px solid #e0d6c2; }
+  .cite-link { font-size: 0.95rem; color: #b8860b; text-decoration: none; flex: 1; min-width: 120px; }
+  .cite-link:hover { text-decoration: underline; }
+  .cite-date { font-family: monospace; font-size: 10px; color: #a08c7a; white-space: nowrap; }
+
+  footer { margin-top: 3rem; text-align: center; border-top: 0.5px solid rgba(26,20,16,0.12); padding-top: 1.25rem; }
+  footer p { font-family: monospace; font-size: 10px; color: #a08c7a; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="mast-eyebrow">Grand Nagus Field Bureau · Stardate 79224.3</div>
+    <div class="mast-title">Dispatch 001</div>
+    <div class="mast-sub">Confirmations, Week 12 · 24 March 2026</div>
+  </div>
+
+  <div class="card" style="animation-delay:0s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 16</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"A deal is a deal... until a better one comes along."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      The specimen had maintained two offshore wind agreements — construction-ready projects off the coasts of New York and North Carolina. A superior arrangement presented itself: approximately one billion in public funds and a preferred position in hydrocarbon extraction. The prior commitments were resolved, a joint statement was issued about American energy security, and I noted that neither party appeared to find this remarkable.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">DS9</span>
+      <span class="badge badge-pub">CNBC</span>
+      <a class="cite-link" href="https://www.cnbc.com/2026/03/24/us-to-pay-totalenergies-1-billion-to-kill-east-coast-wind-projects.html" target="_blank" rel="noopener">White House to pay TotalEnergies $1 billion to kill off East Coast wind farm projects</a>
+      <span class="cite-date">24 Mar 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.13s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 211</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Employees are the rungs on the ladder of success. Don't hesitate to step on them."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      One thousand Algoma Steel workers completed their final shifts this week as the facility transitions to electric arc technology — a process requiring, the company acknowledged, significantly fewer operators. Management described this as positioning the organization for long-term competitiveness, which is accurate. The rungs did their job.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">DS9</span>
+      <span class="badge badge-pub">BNN Bloomberg</span>
+      <a class="cite-link" href="https://www.bnnbloomberg.ca/business/2026/03/24/final-shift-for-laid-off-workers-at-algoma-steel/" target="_blank" rel="noopener">Final shift for laid-off workers at Algoma Steel</a>
+      <span class="cite-date">24 Mar 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.26s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 242</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"More is good. All is better."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      The first quarter recorded eight hundred and thirteen billion in acquisition value — unprecedented — while the number of individual deals declined. The wealth concentrated into larger specimens of the same type. I have filed this under Rule 242, which remains the most self-explanatory entry in the canon.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">Legends</span>
+      <span class="badge badge-pub">MarketMinute</span>
+      <a class="cite-link" href="https://markets.financialcontent.com/stocks/article/marketminute-2026-3-24-the-great-divergence-q1-2026-m-and-a-hits-record-8133-billion-amidst-k-shaped-recovery" target="_blank" rel="noopener">The Great Divergence: Q1 2026 M&amp;A Hits Record $813.3 Billion Amidst 'K-Shaped' Recovery</a>
+      <span class="cite-date">24 Mar 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.39s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 97</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Enough... is never enough."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      Broadcom confirmed this week that AI demand has fully exhausted TSMC's manufacturing capacity, with production bottlenecks projected through 2027 and supply lead times expanding from weeks to months. The customers want more than exists. I note that more will be produced; I note also that it will not be enough.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">Legends</span>
+      <span class="badge badge-pub">Reuters</span>
+      <a class="cite-link" href="https://finance.yahoo.com/sectors/technology/articles/broadcom-flags-supply-constraints-says-054121857.html" target="_blank" rel="noopener">Broadcom flags supply constraints, says TSMC capacity a bottleneck</a>
+      <span class="cite-date">24 Mar 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.52s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 95</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Expand or die."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      The organization, valued at eight hundred and forty billion, announced plans to nearly double its workforce by year's end as it transitions from research laboratory to full-scale enterprise software competitor. The announcement described this as a transformation. Rule 95 describes it as compliance.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">VOY</span>
+      <span class="badge badge-pub">CNBC</span>
+      <a class="cite-link" href="https://www.cnbc.com/2026/03/21/openai-to-nearly-double-workforce-to-8000-by-end-2026-ft-reports.html" target="_blank" rel="noopener">OpenAI to nearly double workforce to 8,000 by end-2026</a>
+      <span class="cite-date">21 Mar 2026</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Grand Nagus Field Bureau · All dispatches archived at romsnotes.substack.com</p>
+  </footer>
+
+</div>
+</body>
+</html>

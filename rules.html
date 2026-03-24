@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ferengi Rules of Acquisition</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: system-ui, -apple-system, sans-serif; background: #fff; color: #1a1a1a; padding: 2rem; }
+@media (prefers-color-scheme: dark) { body { background: #1a1a1a; color: #e8e8e8; } }
+.page { max-width: 860px; margin: 0 auto; }
+.header { margin-bottom: 1.5rem; border-bottom: 0.5px solid rgba(0,0,0,0.15); padding-bottom: 1rem; }
+@media (prefers-color-scheme: dark) { .header { border-bottom-color: rgba(255,255,255,0.15); } }
+.header h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+.header p { font-size: 14px; color: #666; }
+@media (prefers-color-scheme: dark) { .header p { color: #aaa; } }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; align-items: center; }
+.controls input[type="text"] { flex: 1; min-width: 160px; font-size: 14px; padding: 6px 10px; border: 0.5px solid rgba(0,0,0,0.3); border-radius: 8px; background: #fff; color: #1a1a1a; }
+@media (prefers-color-scheme: dark) { .controls input[type="text"] { background: #2a2a2a; color: #e8e8e8; border-color: rgba(255,255,255,0.3); } }
+.controls select { font-size: 13px; padding: 6px 10px; border: 0.5px solid rgba(0,0,0,0.3); border-radius: 8px; background: #fff; color: #1a1a1a; }
+@media (prefers-color-scheme: dark) { .controls select { background: #2a2a2a; color: #e8e8e8; border-color: rgba(255,255,255,0.3); } }
+.count { font-size: 13px; color: #888; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+thead th { font-size: 12px; font-weight: 500; color: #888; text-align: left; padding: 6px 10px; border-bottom: 0.5px solid rgba(0,0,0,0.15); white-space: nowrap; }
+@media (prefers-color-scheme: dark) { thead th { border-bottom-color: rgba(255,255,255,0.15); color: #aaa; } }
+thead th:first-child { width: 48px; text-align: center; }
+thead th:last-child { width: 140px; }
+tbody tr { border-bottom: 0.5px solid rgba(0,0,0,0.08); }
+@media (prefers-color-scheme: dark) { tbody tr { border-bottom-color: rgba(255,255,255,0.08); } }
+tbody tr:hover { background: rgba(0,0,0,0.03); }
+@media (prefers-color-scheme: dark) { tbody tr:hover { background: rgba(255,255,255,0.04); } }
+tbody td { padding: 9px 10px; line-height: 1.5; vertical-align: top; }
+tbody td:first-child { text-align: center; font-weight: 500; font-size: 13px; color: #888; }
+.badge { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 8px; font-weight: 500; white-space: nowrap; margin: 1px 2px 1px 0; }
+.badge-screen { background: #E6F1FB; color: #0C447C; }
+.badge-legends { background: #EEEDFE; color: #3C3489; }
+.badge-ld { background: #EAF3DE; color: #27500A; }
+.badge-ent { background: #FAEEDA; color: #633806; }
+.badge-voy { background: #FAECE7; color: #712B13; }
+.badge-tng { background: #FBEAF0; color: #72243E; }
+.badge-pro { background: #E1F5EE; color: #085041; }
+@media (prefers-color-scheme: dark) {
+  .badge-screen { background: #0C447C; color: #B5D4F4; }
+  .badge-legends { background: #3C3489; color: #CECBF6; }
+  .badge-ld { background: #27500A; color: #C0DD97; }
+  .badge-ent { background: #633806; color: #FAC775; }
+  .badge-voy { background: #712B13; color: #F5C4B3; }
+  .badge-tng { background: #72243E; color: #F4C0D1; }
+  .badge-pro { background: #085041; color: #9FE1CB; }
+}
+.section-label { font-size: 11px; font-weight: 500; color: #888; letter-spacing: 0.05em; text-transform: uppercase; margin: 1.5rem 0 0.5rem; }
+.flag { font-size: 11px; color: #aaa; margin-left: 4px; }
+.note { margin-top: 1.5rem; padding: 1rem; background: rgba(0,0,0,0.03); border-left: 2px solid rgba(0,0,0,0.15); }
+@media (prefers-color-scheme: dark) { .note { background: rgba(255,255,255,0.04); border-left-color: rgba(255,255,255,0.2); } }
+.note p { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 6px; }
+@media (prefers-color-scheme: dark) { .note p { color: #aaa; } }
+.note p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="header">
+    <h1>Ferengi Rules of Acquisition</h1>
+    <p>87 verified rules — canon screen sources and official Behr/Wolfe books only</p>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search rules..." oninput="filter()" />
+    <select id="src" onchange="filter()">
+      <option value="">All sources</option>
+      <option value="DS9">DS9</option>
+      <option value="Legends">Legends</option>
+      <option value="VOY">VOY</option>
+      <option value="ENT">ENT</option>
+      <option value="TNG">TNG</option>
+      <option value="LD">LD</option>
+      <option value="PRO">PRO</option>
+    </select>
+    <span class="count" id="count">87 rules</span>
+  </div>
+
+  <table id="rulesTable">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Rule</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <p class="section-label">Unofficial / disputed rules</p>
+  <table>
+    <thead><tr><th>#</th><th>Rule</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>286</td><td>When Morn leaves, it's all over. <span class="flag">Quark's improvisation</span></td><td><span class="badge badge-screen">DS9</span></td></tr>
+      <tr><td>299</td><td>After you've exploited someone, it never hurts to thank them. That way it's easier to exploit them next time. <span class="flag">via Neelix</span></td><td><span class="badge badge-voy">VOY</span></td></tr>
+      <tr><td>—</td><td>Exploitation begins at home.</td><td><span class="badge badge-voy">VOY</span></td></tr>
+      <tr><td>—</td><td>A good lie is easier to believe than the truth.</td><td><span class="badge badge-voy">VOY</span></td></tr>
+      <tr><td>—</td><td>A man is only worth the sum of his possessions.</td><td><span class="badge badge-ent">ENT</span></td></tr>
+      <tr><td>—</td><td>When no appropriate rule applies, make one up. <span class="flag">Arridor</span></td><td><span class="badge badge-voy">VOY</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="note">
+    <p>† Rules 28 and 168 share identical wording. ST Minutiae lists both; the duplication appears to originate in the source books. Possibly the Ferengi charged twice for the same rule. Entirely on-brand.</p>
+    <p>‡ Rule 95 was misquoted as Rule 45 in ENT "Acquisition" by Krem, who acknowledged himself he didn't have the lobes for business.</p>
+    <p>§ Rule 103's on-screen version in DS9 is incomplete as aired. The full text comes from Legends.</p>
+  </div>
+</div>
+
+<script>
+const rules = [
+  [1,"Once you have their money, you never give it back.","DS9, PRO"],
+  [3,"Never spend more for an acquisition than you have to.","DS9"],
+  [6,"Never allow family to stand in the way of opportunity.","DS9, ENT"],
+  [7,"Keep your ears open.","DS9"],
+  [8,"Small print leads to large risk.","Legends, LD"],
+  [9,"Opportunity plus instinct equals profit.","DS9"],
+  [10,"Greed is eternal.","DS9, VOY, LD"],
+  [13,"Anything worth doing is worth doing for money.","Legends"],
+  [16,"A deal is a deal... until a better one comes along.","DS9, Legends"],
+  [17,"A contract is a contract is a contract... but only between Ferengi.","DS9"],
+  [18,"A Ferengi without profit is no Ferengi at all.","DS9"],
+  [19,"Satisfaction is not guaranteed.","DS9, Legends"],
+  [21,"Never place friendship above profit.","DS9, PRO"],
+  [22,"A wise man can hear profit in the wind.","DS9, VOY"],
+  [23,"Nothing is more important than your health... except for your money.","ENT"],
+  [27,"There is nothing more dangerous than an honest businessman.","Legends"],
+  [28,"Whisper your way to success. †","DS9"],
+  [31,"Never insult a Ferengi's mother. Insult something he cares about instead.","DS9, Legends"],
+  [33,"It never hurts to suck up to the boss.","DS9"],
+  [34,"War is good for business.","DS9"],
+  [35,"Peace is good for business.","DS9, TNG"],
+  [40,"She can touch your lobes, but never your latinum.","Legends"],
+  [41,"Profit is its own reward.","Legends"],
+  [44,"Never confuse wisdom with luck.","Legends"],
+  [47,"Don't trust a man wearing a better suit than yours.","DS9"],
+  [48,"The bigger the smile, the sharper the knife.","DS9"],
+  [52,"Never ask when you can take.","DS9, Legends"],
+  [57,"Good customers are as rare as latinum. Treasure them.","DS9"],
+  [58,"There is no substitute for success.","Legends"],
+  [59,"Free advice is seldom cheap.","DS9"],
+  [60,"Keep your lies consistent.","Legends"],
+  [62,"The riskier the road, the greater the profit.","DS9, LD"],
+  [65,"Win or lose, there's always Huyperian beetle snuff.","Legends"],
+  [74,"Knowledge equals profit.","VOY"],
+  [75,"Home is where the heart is, but the stars are made of latinum.","DS9"],
+  [76,"Every once in a while, declare peace. It confuses the hell out of your enemies.","DS9"],
+  [79,"Beware of the Vulcan greed for knowledge.","Legends"],
+  [82,"The flimsier the product, the higher the price.","Legends"],
+  [85,"Never let the competition know what you're thinking.","Legends"],
+  [89,"Ask not what your profits can do for you, but what you can do for your profits.","Legends"],
+  [91,"Your boss is only worth what he pays you.","LD"],
+  [94,"Females and finances don't mix.","DS9"],
+  [95,"Expand or die. ‡","VOY, ENT"],
+  [97,"Enough... is never enough.","Legends"],
+  [98,"Every man has his price.","DS9"],
+  [99,"Trust is the biggest liability of all.","Legends"],
+  [102,"Nature decays, but latinum lasts forever.","DS9"],
+  [103,"Sleep can interfere with your lust for latinum. §","DS9, Legends"],
+  [104,"Faith moves mountains... of inventory.","Legends"],
+  [106,"There is no honor in poverty.","Legends"],
+  [109,"Dignity and an empty sack is worth the sack.","DS9"],
+  [111,"Treat people in your debt like family... exploit them.","DS9"],
+  [112,"Never have sex with the boss's sister.","DS9"],
+  [113,"Always have sex with the boss.","Legends"],
+  [121,"Everything is for sale, even friendship.","Legends"],
+  [123,"Even a blind man can recognize the glow of latinum.","Legends"],
+  [125,"You can't make a deal if you're dead.","DS9, Legends"],
+  [139,"Wives serve, brothers inherit.","DS9"],
+  [141,"Only fools pay retail.","Legends"],
+  [144,"There's nothing wrong with charity... as long as it winds up in your pocket.","Legends"],
+  [162,"Even in the worst of times, someone turns a profit.","Legends"],
+  [168,"Whisper your way to success. †","DS9, Legends"],
+  [177,"Know your enemies... but do business with them always.","Legends"],
+  [181,"Not even dishonesty can tarnish the shine of profit.","Legends"],
+  [189,"Let others keep their reputation. You keep their money.","Legends"],
+  [190,"Hear all, trust nothing.","DS9"],
+  [192,"Never cheat a Klingon... unless you're sure you can get away with it.","Legends"],
+  [194,"It's always good to know about new customers before they walk in your door.","DS9"],
+  [202,"The justification for profit is profit.","Legends"],
+  [203,"New customers are like razor-toothed gree worms. They can be succulent, but sometimes they bite back.","DS9"],
+  [208,"Sometimes the only thing more dangerous than a question is an answer.","DS9, PRO"],
+  [211,"Employees are the rungs on the ladder of success. Don't hesitate to step on them.","DS9"],
+  [214,"Never begin a negotiation on an empty stomach.","DS9"],
+  [217,"You can't free a fish from water.","DS9"],
+  [218,"Always know what you're buying.","DS9, Legends"],
+  [223,"Beware the man who doesn't make time for oo-mox.","DS9, Legends"],
+  [229,"Latinum lasts longer than lust.","DS9"],
+  [236,"You can't buy fate.","Legends"],
+  [239,"Never be afraid to mislabel a product.","DS9"],
+  [242,"More is good. All is better.","Legends"],
+  [255,"A wife is a luxury. A smart accountant is a necessity.","Legends"],
+  [261,"A wealthy man can afford anything except a conscience.","Legends"],
+  [263,"Never allow doubt to tarnish your lust for latinum.","DS9"],
+  [266,"When in doubt, lie.","Legends"],
+  [284,"Deep down, everyone's a Ferengi.","Legends"],
+  [285,"No good deed ever goes unpunished.","DS9"],
+  [289,"Shoot first, count profits later.","LD"],
+];
+
+function badgesFor(src) {
+  return src.split(',').map(s => {
+    const t = s.trim();
+    const cls = t === 'DS9' ? 'badge-screen' : t === 'Legends' ? 'badge-legends' : t === 'LD' ? 'badge-ld' : t === 'ENT' ? 'badge-ent' : t === 'VOY' ? 'badge-voy' : t === 'TNG' ? 'badge-tng' : t === 'PRO' ? 'badge-pro' : 'badge-screen';
+    return `<span class="badge ${cls}">${t}</span>`;
+  }).join(' ');
+}
+
+function render(data) {
+  const tb = document.getElementById('tbody');
+  tb.innerHTML = data.map(([n,r,s]) =>
+    `<tr><td>${n}</td><td>${r}</td><td>${badgesFor(s)}</td></tr>`
+  ).join('');
+  document.getElementById('count').textContent = `${data.length} rules`;
+}
+
+function filter() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const src = document.getElementById('src').value;
+  const filtered = rules.filter(([n,r,s]) => {
+    const matchQ = !q || r.toLowerCase().includes(q) || String(n).includes(q);
+    const matchS = !src || s.includes(src);
+    return matchQ && matchS;
+  });
+  render(filtered);
+}
+
+render(rules);
+</script>
+</body>
+</html>

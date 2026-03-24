@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules Observed — Grand Nagus Field Bureau</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f0e8;
+    color: #1a1410;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .wrap { padding: 0.75rem 0 2rem; max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .masthead {
+    background: #ede6d6;
+    border: 0.5px solid #e0d6c2;
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+    text-align: center;
+  }
+  .mast-eyebrow { font-size: 11px; color: #a08c7a; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-family: monospace; }
+  .mast-title { font-size: 22px; font-weight: 500; font-style: italic; color: #1a1410; margin-bottom: 3px; }
+  .mast-sub { font-size: 13px; color: #6b5d50; font-style: italic; }
+
+  .step {
+    border: 0.5px solid #e0d6c2;
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    background: #ede6d6;
+  }
+  .step-label {
+    font-size: 10px; font-weight: 500; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #6b5d50;
+    margin-bottom: 10px; font-family: monospace;
+    border-bottom: 0.5px solid rgba(26,20,16,0.1);
+    padding-bottom: 8px;
+  }
+
+  .controls { display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+  .ctrl { display: flex; flex-direction: column; gap: 5px; }
+  .ctrl label { font-size: 10px; color: #6b5d50; text-transform: uppercase; letter-spacing: 0.1em; font-family: monospace; }
+  .ctrl select, .ctrl input[type="number"] {
+    font-size: 14px; padding: 6px 8px;
+    border: 0.5px solid #e0d6c2;
+    border-radius: 2px;
+    background: #f5f0e8;
+    color: #1a1410;
+    appearance: none; -webkit-appearance: none;
+  }
+  .ctrl select { width: 148px; cursor: pointer; }
+  .ctrl input[type="number"] { width: 62px; }
+
+  .build-btn, .render-btn {
+    padding: 7px 18px;
+    font-family: monospace; font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: #1a1410; color: #f5f0e8;
+    border: none; border-radius: 2px;
+    cursor: pointer; align-self: flex-end;
+    transition: background 0.15s;
+  }
+  .build-btn:hover, .render-btn:hover { background: #b8860b; }
+
+  .prompt-section { display: none; margin-top: 1rem; }
+  .prompt-box {
+    font-family: monospace; font-size: 11px; line-height: 1.6;
+    color: #3d342a;
+    background: #f5f0e8;
+    border: 0.5px solid rgba(26,20,16,0.12);
+    border-radius: 2px;
+    padding: 10px 12px;
+    white-space: pre-wrap; word-break: break-word;
+    margin-bottom: 8px;
+    max-height: 110px; overflow-y: auto;
+  }
+  .copy-btn {
+    font-family: monospace; font-size: 10px; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 5px 14px;
+    background: transparent; border: 0.5px solid #6b5d50;
+    border-radius: 2px; color: #3d342a; cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { border-color: #b8860b; color: #b8860b; }
+  .copy-btn.ok { border-color: #3a5a1a; color: #3a5a1a; }
+
+  textarea {
+    width: 100%;
+    font-family: monospace; font-size: 11px; line-height: 1.6;
+    padding: 10px 12px;
+    background: #f5f0e8;
+    border: 0.5px solid #e0d6c2;
+    border-radius: 2px; color: #3d342a;
+    resize: vertical; min-height: 70px;
+  }
+  textarea:focus { outline: 1px solid #b8860b; outline-offset: 1px; }
+
+  .render-row { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
+  .parse-err { font-family: monospace; font-size: 11px; color: #8b2020; display: none; }
+
+  .divider { border-top: 0.5px solid rgba(26,20,16,0.12); margin: 0 0 1.5rem; }
+
+  .card {
+    margin-bottom: 2.5rem;
+    border-top: 1.5px solid #1a1410;
+    padding-top: 1.25rem;
+    opacity: 0; animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  .card-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
+  .rule-num { font-family: monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+  .obs-badge {
+    font-family: monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; background: #e8f0e0; color: #3a5a1a; border-radius: 2px;
+  }
+  .rule-text {
+    font-size: 1.55rem; font-style: italic; font-weight: 500;
+    color: #1a1410; line-height: 1.25; margin-bottom: 1rem;
+  }
+  .field-divider { display: flex; align-items: center; gap: 10px; margin: 0 0 1rem; }
+  .field-divider::before, .field-divider::after { content:''; flex:1; border-top: 0.5px solid rgba(26,20,16,0.12); }
+  .field-divider span { font-family: monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+
+  .commentary {
+    font-size: 1.05rem; line-height: 1.8; color: #3d342a; font-style: italic;
+    border-left: 2px solid #b8860b; padding-left: 1rem; margin-bottom: 1rem;
+  }
+  .citation {
+    display: flex; flex-wrap: wrap; gap: 7px; align-items: baseline;
+    background: #ede6d6; border: 0.5px solid rgba(26,20,16,0.1);
+    border-radius: 2px; padding: 8px 12px;
+  }
+  .badge { font-family: monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500; padding: 2px 8px; border-radius: 2px; white-space: nowrap; }
+  .badge-src { background: #e2edf7; color: #1a4a7a; }
+  .badge-pub { background: #f3ede0; color: #6b4a10; border: 0.5px solid #e0d6c2; }
+  .cite-link { font-size: 0.95rem; color: #b8860b; text-decoration: none; flex: 1; min-width: 120px; }
+  .cite-link:hover { text-decoration: underline; }
+  .cite-date { font-family: monospace; font-size: 10px; color: #a08c7a; white-space: nowrap; }
+
+  footer { margin-top: 3rem; text-align: center; border-top: 0.5px solid rgba(26,20,16,0.12); padding-top: 1.25rem; }
+  footer p { font-family: monospace; font-size: 10px; color: #a08c7a; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="mast-eyebrow">Grand Nagus Field Bureau · Stardate ongoing</div>
+    <div class="mast-title">Rules Observed</div>
+    <div class="mast-sub">The Rules of Acquisition, confirmed by today's news</div>
+  </div>
+
+  <div class="step">
+    <div class="step-label">Step 1 — Configure &amp; copy prompt</div>
+    <div class="controls">
+      <div class="ctrl">
+        <label>Observations</label>
+        <input type="number" id="cnt" value="3" min="1" max="5">
+      </div>
+      <div class="ctrl">
+        <label>Canon</label>
+        <select id="src">
+          <option value="">All rules</option>
+          <option value="DS9">DS9 only</option>
+          <option value="Legends">Legends only</option>
+          <option value="VOY">VOY only</option>
+        </select>
+      </div>
+      <div class="ctrl">
+        <label>News window</label>
+        <select id="win">
+          <option value="48 hours">48 hours</option>
+          <option value="past week" selected>Past week</option>
+          <option value="past 2 weeks">Past 2 weeks</option>
+        </select>
+      </div>
+      <button class="build-btn" onclick="buildPrompt()">Build prompt</button>
+    </div>
+    <div class="prompt-section" id="promptSection">
+      <div class="prompt-box" id="promptBox"></div>
+      <button class="copy-btn" id="copyBtn" onclick="copyPrompt()">Copy prompt</button>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-label">Step 2 — Paste JSON response &amp; render</div>
+    <textarea id="jsonPaste" placeholder="Paste the JSON array Claude returns here..."></textarea>
+    <div class="render-row">
+      <button class="render-btn" onclick="renderPasted()">Render observations</button>
+      <span class="parse-err" id="parseErr">Could not parse JSON — paste the raw array only.</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div id="output"></div>
+
+  <footer><p>A field guide to the predictable. The Rules were always right.</p></footer>
+</div>
+
+<script>
+const rules = [
+  [1,"Once you have their money, you never give it back.","DS9"],
+  [3,"Never spend more for an acquisition than you have to.","DS9"],
+  [6,"Never allow family to stand in the way of opportunity.","DS9"],
+  [9,"Opportunity plus instinct equals profit.","DS9"],
+  [10,"Greed is eternal.","DS9"],
+  [16,"A deal is a deal... until a better one comes along.","DS9"],
+  [17,"A contract is a contract... but only between Ferengi.","DS9"],
+  [21,"Never place friendship above profit.","DS9"],
+  [22,"A wise man can hear profit in the wind.","DS9"],
+  [27,"There is nothing more dangerous than an honest businessman.","Legends"],
+  [33,"It never hurts to suck up to the boss.","DS9"],
+  [34,"War is good for business.","DS9"],
+  [35,"Peace is good for business.","DS9"],
+  [47,"Don't trust a man wearing a better suit than yours.","DS9"],
+  [48,"The bigger the smile, the sharper the knife.","DS9"],
+  [52,"Never ask when you can take.","Legends"],
+  [57,"Good customers are as rare as latinum. Treasure them.","DS9"],
+  [59,"Free advice is seldom cheap.","DS9"],
+  [62,"The riskier the road, the greater the profit.","DS9"],
+  [74,"Knowledge equals profit.","VOY"],
+  [76,"Every once in a while, declare peace. It confuses the hell out of your enemies.","DS9"],
+  [82,"The flimsier the product, the higher the price.","Legends"],
+  [85,"Never let the competition know what you're thinking.","Legends"],
+  [89,"Ask not what your profits can do for you, but what you can do for your profits.","Legends"],
+  [95,"Expand or die.","VOY"],
+  [97,"Enough... is never enough.","Legends"],
+  [98,"Every man has his price.","DS9"],
+  [99,"Trust is the biggest liability of all.","Legends"],
+  [102,"Nature decays, but latinum lasts forever.","DS9"],
+  [109,"Dignity and an empty sack is worth the sack.","DS9"],
+  [111,"Treat people in your debt like family... exploit them.","DS9"],
+  [121,"Everything is for sale, even friendship.","Legends"],
+  [162,"Even in the worst of times, someone turns a profit.","Legends"],
+  [177,"Know your enemies... but do business with them always.","Legends"],
+  [189,"Let others keep their reputation. You keep their money.","Legends"],
+  [190,"Hear all, trust nothing.","DS9"],
+  [202,"The justification for profit is profit.","Legends"],
+  [203,"New customers are like razor-toothed gree worms.","DS9"],
+  [208,"Sometimes the only thing more dangerous than a question is an answer.","DS9"],
+  [211,"Employees are the rungs on the ladder of success. Don't hesitate to step on them.","DS9"],
+  [218,"Always know what you're buying.","DS9"],
+  [239,"Never be afraid to mislabel a product.","DS9"],
+  [261,"A wealthy man can afford anything except a conscience.","Legends"],
+  [263,"Never allow doubt to tarnish your lust for latinum.","DS9"],
+  [266,"When in doubt, lie.","Legends"],
+  [284,"Deep down, everyone's a Ferengi.","Legends"],
+  [285,"No good deed ever goes unpunished.","DS9"],
+];
+
+let lastPrompt = '';
+
+function buildPrompt() {
+  const count = Math.max(1, Math.min(5, parseInt(document.getElementById('cnt').value)||3));
+  const src   = document.getElementById('src').value;
+  const win   = document.getElementById('win').value;
+  const pool  = src ? rules.filter(r => r[2].includes(src)) : rules;
+  const list  = pool.map(r => `Rule ${r[0]}: "${r[1]}"`).join('; ');
+  const srcNote = src ? ` (${src} rules only)` : '';
+  lastPrompt = `Using web search, find ${count} real news stories from the ${win} from reputable outlets (NYT, WSJ, FT, Reuters, Bloomberg preferred). For each story, identify which Ferengi Rule of Acquisition it most faithfully confirms — not as a violation, but as evidence the Rules are accurate descriptions of how power operates. Choose from${srcNote}: ${list}. Write commentary in Rom's voice: a naturalist who is half-horrified, half-impressed, and entirely unsurprised. 2-3 sentences each. No moralizing. Do not repeat any Rule number. Respond with ONLY a JSON array — no prose, no markdown fences: [{"ruleNum": number, "ruleText": string, "ruleSrc": string, "headline": string, "publication": string, "url": string, "date": string, "commentary": string}]`;
+  document.getElementById('promptBox').textContent = lastPrompt;
+  document.getElementById('promptSection').style.display = 'block';
+  const btn = document.getElementById('copyBtn');
+  btn.textContent = 'Copy prompt';
+  btn.classList.remove('ok');
+}
+
+function copyPrompt() {
+  navigator.clipboard.writeText(lastPrompt).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied ✓';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('ok'); }, 2200);
+  });
+}
+
+function renderPasted() {
+  const raw = document.getElementById('jsonPaste').value.trim();
+  const err = document.getElementById('parseErr');
+  err.style.display = 'none';
+  try {
+    const a = raw.indexOf('['), b = raw.lastIndexOf(']');
+    const cleaned = (a !== -1 && b !== -1) ? raw.slice(a, b+1) : raw;
+    const data = JSON.parse(cleaned);
+    if (!Array.isArray(data) || !data.length) throw new Error();
+    render(data);
+  } catch(e) { err.style.display = 'inline'; }
+}
+
+function render(items) {
+  document.getElementById('output').innerHTML = items.map((p, i) => `
+    <div class="card" style="animation-delay:${i*0.13}s">
+      <div class="card-meta">
+        <span class="rule-num">Rule ${p.ruleNum}</span>
+        <span class="obs-badge">observed</span>
+      </div>
+      <div class="rule-text">"${p.ruleText}"</div>
+      <div class="field-divider"><span>field note</span></div>
+      <div class="commentary">${p.commentary}</div>
+      <div class="citation">
+        <span class="badge badge-src">${p.ruleSrc||''}</span>
+        ${p.publication ? `<span class="badge badge-pub">${p.publication}</span>` : ''}
+        ${p.url ? `<a class="cite-link" href="${p.url}" target="_blank" rel="noopener">${p.headline}</a>` : `<span class="cite-link">${p.headline||''}</span>`}
+        ${p.date ? `<span class="cite-date">${p.date}</span>` : ''}
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('output').scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
+</body>
+</html>
