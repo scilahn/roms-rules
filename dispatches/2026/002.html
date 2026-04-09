@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dispatch 002 — Grand Nagus Field Bureau</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f0e8;
+    color: #1a1410;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  .masthead {
+    background: #ede6d6;
+    border: 0.5px solid #e0d6c2;
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  .mast-eyebrow { font-size: 11px; color: #a08c7a; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-family: monospace; }
+  .mast-title { font-size: 22px; font-weight: 500; font-style: italic; color: #1a1410; margin-bottom: 3px; }
+  .mast-sub { font-size: 13px; color: #6b5d50; font-style: italic; }
+
+  .card {
+    margin-bottom: 2.5rem;
+    border-top: 1.5px solid #1a1410;
+    padding-top: 1.25rem;
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+  .card-meta { display: flex; align-items: baseline; gap: 10px; margin-bottom: 7px; }
+  .rule-num { font-family: monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+  .obs-badge {
+    font-family: monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 2px 8px; background: #e8f0e0; color: #3a5a1a; border-radius: 2px;
+  }
+  .rule-text {
+    font-size: 1.55rem; font-style: italic; font-weight: 500;
+    color: #1a1410; line-height: 1.25; margin-bottom: 1rem;
+  }
+  .field-divider { display: flex; align-items: center; gap: 10px; margin: 0 0 1rem; }
+  .field-divider::before, .field-divider::after { content:''; flex:1; border-top: 0.5px solid rgba(26,20,16,0.12); }
+  .field-divider span { font-family: monospace; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: #a08c7a; }
+
+  .commentary {
+    font-size: 1.05rem; line-height: 1.8; color: #3d342a; font-style: italic;
+    border-left: 2px solid #b8860b; padding-left: 1rem; margin-bottom: 1rem;
+  }
+  .citation {
+    display: flex; flex-wrap: wrap; gap: 7px; align-items: baseline;
+    background: #ede6d6; border: 0.5px solid rgba(26,20,16,0.1);
+    border-radius: 2px; padding: 8px 12px;
+  }
+  .badge { font-family: monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-weight: 500; padding: 2px 8px; border-radius: 2px; white-space: nowrap; }
+  .badge-src { background: #e2edf7; color: #1a4a7a; }
+  .badge-pub { background: #f3ede0; color: #6b4a10; border: 0.5px solid #e0d6c2; }
+  .cite-link { font-size: 0.95rem; color: #b8860b; text-decoration: none; flex: 1; min-width: 120px; }
+  .cite-link:hover { text-decoration: underline; }
+  .cite-date { font-family: monospace; font-size: 10px; color: #a08c7a; white-space: nowrap; }
+
+  footer { margin-top: 3rem; text-align: center; border-top: 0.5px solid rgba(26,20,16,0.12); padding-top: 1.25rem; }
+  footer p { font-family: monospace; font-size: 10px; color: #a08c7a; letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="mast-eyebrow">Grand Nagus Field Bureau · Stardate 79265.3</div>
+    <div class="mast-title">Dispatch 002</div>
+    <div class="mast-sub">Confirmations, Week 14 · 8 April 2026</div>
+  </div>
+
+  <div class="card" style="animation-delay:0s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 35</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Peace is good for business."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      After a week culminating in the specific assurance that "a whole civilization will die tonight," the specimen's leadership announced a two-week pause and crude fell roughly twenty dollars in a session. Equities posted their best day in months. The Rule does not distinguish between sincere peace and tactical peace — only between peace and its absence.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">TNG</span>
+      <span class="badge badge-pub">CNBC</span>
+      <a class="cite-link" href="https://www.cnbc.com/2026/04/07/stock-market-today-live-updates.html" target="_blank" rel="noopener">Stock market news for April 8, 2026</a>
+      <span class="cite-date">8 Apr 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.13s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 111</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Treat people in your debt like family... exploit them."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      For many years the specimen had built its agricultural equipment to depend on proprietary diagnostic software — software the farmers could not access without returning to authorized dealers and paying again. A ninety-nine million dollar settlement was reached this week, with no finding of wrongdoing, and the digital tools will be made available for the next ten years. At which point, I expect, the equipment will require something else.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">DS9</span>
+      <span class="badge badge-pub">AgWeb</span>
+      <a class="cite-link" href="https://www.agweb.com/news/machinery/deere-co-reaches-99-million-settlement-multiyear-right-repair-litigation" target="_blank" rel="noopener">Deere &amp; Co. Reaches $99 Million Settlement in Multiyear 'Right-to-Repair' Litigation</a>
+      <span class="cite-date">7 Apr 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.26s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 89</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Ask not what your profits can do for you, but what you can do for your profits."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      One hundred and forty-five employees of the camera manufacturer will not be present for the launch of the company's new product line later this month. The accompanying filing described the timing as a restructuring designed to "drive stronger operating leverage." The contribution the workers were asked to make to the profits has now been made.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">Legends</span>
+      <span class="badge badge-pub">Engadget</span>
+      <a class="cite-link" href="https://www.engadget.com/cameras/gopro-to-lay-off-over-20-percent-of-staff-by-the-end-of-2026-131918779.html" target="_blank" rel="noopener">GoPro to lay off over 20 percent of staff by the end of 2026</a>
+      <span class="cite-date">7 Apr 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.39s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 239</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Never be afraid to mislabel a product."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      The chief executive of a Raleigh software firm announced this week that ninety positions had been eliminated as part of a process he described as "refounding" the company. The word is interesting. I have made a small annotation in my notes.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">DS9</span>
+      <span class="badge badge-pub">Axios</span>
+      <a class="cite-link" href="https://www.axios.com/local/raleigh/2026/04/07/raleigh-software-unicorn-pendo-layoffs-jobs" target="_blank" rel="noopener">Raleigh software startup Pendo joins the wave of tech layoffs, cutting 10% of its workforce</a>
+      <span class="cite-date">7 Apr 2026</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.52s">
+    <div class="card-meta">
+      <span class="rule-num">Rule 23</span>
+      <span class="obs-badge">observed</span>
+    </div>
+    <div class="rule-text">"Nothing is more important than your health... except for your money."</div>
+    <div class="field-divider"><span>field note</span></div>
+    <div class="commentary">
+      Two private equity houses finalized the acquisition of a women's health diagnostics firm this week, valued at approximately seventy-nine dollars per share. The accompanying analyst note praised "demographic tailwinds" and "recurring revenue streams" — phrases I have come to recognize as Ferengi when translated correctly. The Rule was written several centuries ago. The humans seem to be discovering it at their own pace.
+    </div>
+    <div class="citation">
+      <span class="badge badge-src">ENT</span>
+      <span class="badge badge-pub">HedgeCo</span>
+      <a class="cite-link" href="https://www.hedgeco.net/news/04/2026/blackstone-and-tpg-finalize-hologic-acquisition.html" target="_blank" rel="noopener">Blackstone and TPG Finalize Hologic Acquisition</a>
+      <span class="cite-date">8 Apr 2026</span>
+    </div>
+  </div>
+
+  <footer>
+    <p>Grand Nagus Field Bureau · All dispatches archived at romsnotes.substack.com</p>
+  </footer>
+
+</div>
+</body>
+</html>
